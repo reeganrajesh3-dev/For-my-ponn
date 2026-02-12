@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Ponn ❤️🧿</title>
+    <style>
+        body {
+            background-color: #FDF5E6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Serif', Georgia, serif;
+            overflow-x: hidden;
+        }
+
+        .card {
+            background-color: #FFC0CB;
+            padding: 25px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 400px;
+            display: none;
+        }
+
+        .active { display: block; }
+
+        button {
+            padding: 12px 20px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 8px;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+
+        .yes-btn { background-color: #ff4d4d; color: white; }
+        .no-btn { background-color: #4d79ff; color: white; position: relative; }
+
+        /* Gallery Styles */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .polaroid {
+            background: white;
+            padding: 5px 5px 12px 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            font-size: 10px;
+        }
+        .polaroid img { width: 100%; height: 80px; object-fit: cover; }
+        .polaroid span { display: block; margin-top: 5px; font-family: cursive; }
+
+        /* Scanner Styles */
+        .scanner-container {
+            position: relative;
+            margin: 20px auto;
+            width: 130px;
+            height: 130px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+        }
+        .heart-icon { font-size: 65px; color: #ff4d4d; z-index: 1; animation: pulse 1.5s infinite; }
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: #fff;
+            box-shadow: 0 0 15px #fff;
+            display: none;
+            z-index: 2;
+            animation: scanMove 2s infinite ease-in-out;
+        }
+        .progress-ring { position: absolute; transform: rotate(-90deg); }
+        .progress-ring__circle {
+            transition: stroke-dashoffset 0.1s;
+            stroke-dasharray: 326.7;
+            stroke-dashoffset: 326.7;
+        }
+
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        @keyframes scanMove { 0% { top: 20%; } 50% { top: 80%; } 100% { top: 20%; } }
+
+        /* Gifts Styles */
+        .gift-container { display: flex; justify-content: space-around; margin: 20px 0; }
+        .gift-box { background: white; padding: 10px; border-radius: 15px; width: 85px; font-size: 11px; }
+        .gift-box img { width: 100%; margin-bottom: 5px; }
+
+        /* Video/Final */
+        video { border: 5px solid white; border-radius: 15px; width: 100%; margin: 15px 0; }
+        .final-text { font-size: 14px; line-height: 1.5; color: #444; }
+    </style>
+</head>
+<body>
+
+    <div class="card active" id="screen1">
+        <img src="https://media.tenor.com/9f7P1H0Yv7MAAAAi/peach-goma-peach-and-goma.gif" width="100">
+        <h2>Will you be mine? 🥺</h2>
+        <p>Life is an incredible journey, and I want to spend every single second of it with you.</p>
+        <button class="yes-btn" onclick="showScreen('screen2')">YES</button>
+        <button class="no-btn" id="noBtn" onmouseover="moveNo()">NO</button>
+    </div>
+
+    <div class="card" id="screen2">
+        <h2>Quiz for you 😚</h2>
+        <p>Who is the absolute 'Boss' in this relationship? 🤨</p>
+        <button onclick="alert('Try again! 😜')">Me</button>
+        <button class="yes-btn" onclick="showScreen('screen3')">Obviously You ❤️</button>
+        <button onclick="alert('Nope! ❌')">My Mom</button>
+    </div>
+
+    <div class="card" id="screen3">
+        <h3>Look at this cutie 😭</h3>
+        <div class="gallery-grid">
+            <div class="polaroid"><img src="photo1.jpg"><span>Sweet Hello</span></div>
+            <div class="polaroid"><img src="photo4.jpg"><span>True Smile</span></div>
+            <div class="polaroid"><img src="photo3.jpg"><span>Perfect Day</span></div>
+            <div class="polaroid"><img src="photo5.jpg"><span>Only Us</span></div>
+            <div class="polaroid"><img src="photo2.jpg"><span>My Home</span></div>
+            <div class="polaroid"><img src="photo6.jpg"><span>Forever Us</span></div>
+        </div>
+        <button class="yes-btn" onclick="showScreen('screen4')">NEXT →</button>
+    </div>
+
+    <div class="card" id="screen4">
+        <h2>Heart Scanner 💓</h2>
+        <p>Hold your finger on the heart to verify your love level...</p>
+        <div class="scanner-container" onmousedown="startScan()" onmouseup="stopScan()" ontouchstart="startScan()" ontouchend="stopScan()">
+            <div class="heart-icon">❤️</div>
+            <div class="scan-line" id="line"></div>
+            <svg class="progress-ring" width="120" height="120">
+                <circle class="progress-ring__circle" stroke="white" stroke-width="4" fill="transparent" r="52" cx="60" cy="60"/>
+            </svg>
+        </div>
+        <p id="scan-status" style="font-weight:bold; color:#ff4d4d">HOLD TO SCAN</p>
+    </div>
+
+    <div class="card" id="screen5">
+        <h2>Something for You</h2>
+        <div class="gift-container">
+            <div class="gift-box"><img src="https://media.tenor.com/XpAn7D-I_mEAAAAi/mochi-peach.gif">Gift 1</div>
+            <div class="gift-box"><img src="https://media.tenor.com/X-A5q_kF390AAAAi/peach-goma.gif">Gift 2</div>
+            <div class="gift-box"><img src="https://media.tenor.com/VpS9eE-A6mUAAAAi/peach-goma.gif">Gift 3</div>
+        </div>
+        <button class="yes-btn" onclick="showScreen('screen6')">FINALLY... ❤️</button>
+    </div>
+
+    <div class="card" id="screen6">
+        <h2>You are my forever 🧿❤️!</h2>
+        <video controls>
+            <source src="final_video.mp4" type="video/mp4">
+        </video>
+        <p class="final-text">I love you more than words can say. No matter where life takes us, my heart will always choose you. Thank you for being my peace, my smile, my love. ❤️</p>
+    </div>
+
+    <script>
+        let scanProgress = 0;
+        let scanInterval;
+        const circle = document.querySelector('.progress-ring__circle');
+        const circumference = 52 * 2 * Math.PI;
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function moveNo() {
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        function startScan() {
+            document.getElementById('line').style.display = 'block';
+            document.getElementById('scan-status').innerText = "SCANNING...";
+            scanInterval = setInterval(() => {
+                if (scanProgress < 100) {
+                    scanProgress += 2;
+                    circle.style.strokeDashoffset = circumference - (scanProgress / 100) * circumference;
+                } else {
+                    clearInterval(scanInterval);
+                    showScreen('screen5');
+                }
+            }, 50);
+        }
+
+        function stopScan() {
+            clearInterval(scanInterval);
+            document.getElementById('line').style.display = 'none';
+            if (scanProgress < 100) {
+                scanProgress = 0;
+                circle.style.strokeDashoffset = circumference;
+                document.getElementById('scan-status').innerText = "HOLD TO SCAN";
+            }
+        }
+    </script>
+</body>
+</html>
